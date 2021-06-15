@@ -8,6 +8,7 @@ import getApiData from '../services/api';
 import CharacterList from './CharacterList';
 import NameFilter from './NameFilter';
 import CharacterDetail from './CharacterDetail';
+import Warning from './Warning';
 
 function App() {
   const [characters, setCharacters] = useState([]);
@@ -42,6 +43,14 @@ function App() {
     return <CharacterDetail character={foundCharacter} />;
   };
 
+  const renderListOrWarning = () => {
+    return characters !== undefined ? (
+      <CharacterList characters={filteredCharacters} />
+    ) : (
+      <Warning />
+    );
+  };
+
   return (
     <div className='main'>
       <h1>Rick and Morty</h1>
@@ -50,7 +59,7 @@ function App() {
           <form onSubmit={submitHandler}>
             <NameFilter handleFilter={handleFilter} />
           </form>
-          <CharacterList characters={filteredCharacters} />
+          {renderListOrWarning()}
         </Route>
         <Route
           path='/character/:characterId'

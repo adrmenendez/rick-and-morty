@@ -9,11 +9,8 @@ const CharacterList = (props) => {
       </li>
     );
   });
-  const content =
-    props.characters === undefined
-      ? 'No hay personajes que coincidan con tu criterio de búsqueda'
-      : renderCharacters;
-  return <ul className='list'>{content}</ul>;
+
+  return <ul className='list'>{renderCharacters}</ul>;
 };
 
 export default CharacterList;

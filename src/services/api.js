@@ -10,6 +10,7 @@ const getApiData = () => {
           specie: character.species,
           status: character.status,
           location: character.location.name,
+          episodes: character.episode.length,
         };
       });
     });
