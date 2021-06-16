@@ -1,5 +1,6 @@
 import React from 'react';
 import CharacterCard from './CharacterCard';
+import Warning from './Warning';
 
 const CharacterList = (props) => {
   const renderCharacters = props.characters.map((character) => {
@@ -10,7 +11,10 @@ const CharacterList = (props) => {
     );
   });
 
-  return <ul className='list'>{renderCharacters}</ul>;
+  const renderListOrWarning =
+    props.characters.length !== 0 ? renderCharacters : <Warning />;
+
+  return <ul className='list'>{renderListOrWarning}</ul>;
 };
 
 export default CharacterList;

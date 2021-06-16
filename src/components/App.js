@@ -4,8 +4,7 @@ import '../styles/App.scss';
 import getApiData from '../services/api';
 import ls from '../services/storage';
 import CharacterList from './CharacterList';
-import NameFilter from './NameFilter';
-import SpecieFilter from './SpecieFilter';
+import Filters from './Filters';
 import CharacterDetail from './CharacterDetail';
 import Warning from './Warning';
 
@@ -24,10 +23,7 @@ function App() {
       });
     }
   }, [characters.length]);
-
-  useEffect(() => {
-    ls.set('characters', characters);
-  }, [characters]);
+  useEffect(() => ls.set('characters', characters), [characters]);
 
   const handleFilter = (data) => {
     if (data.key === 'name') {
@@ -44,12 +40,7 @@ function App() {
       return character.name.toLowerCase().includes(filterName.toLowerCase());
     })
     .filter((character) => {
-      if (filterSpecie === '') {
-        //la función devuelve true cuando el elemento pasa el criterio de filtrado
-        return true;
-      } else {
-        return character.specie === filterSpecie;
-      }
+      return filterSpecie === '' ? true : character.specie === filterSpecie;
     });
 
   const renderCharacterDetail = (routerProps) => {
@@ -57,23 +48,11 @@ function App() {
     const foundCharacter = characters.find(
       (character) => character.id === parseInt(matchId)
     );
-    if (foundCharacter !== undefined) {
-      return <CharacterDetail character={foundCharacter} />;
-    } else {
-      return <Warning />;
-    }
-  };
-
-  const renderListOrWarning = () => {
-    if (filteredCharacters.length !== 0) {
-      return <CharacterList characters={filteredCharacters} />;
-    } else {
-      return <Warning />;
-    }
-  };
-
-  const submitHandler = (e) => {
-    e.preventDefault();
+    return foundCharacter !== undefined ? (
+      <CharacterDetail character={foundCharacter} />
+    ) : (
+      <Warning />
+    );
   };
 
   return (
@@ -81,11 +60,8 @@ function App() {
       <Switch>
         <Route exact path='/'>
           <h1 className='main_title'>Rick and Morty</h1>
-          <form onSubmit={submitHandler} className='form'>
-            <NameFilter handleFilter={handleFilter} value={filterName} />
-            <SpecieFilter handleFilter={handleFilter} />
-          </form>
-          {renderListOrWarning()}
+          <Filters handleFilter={handleFilter} value={filterName} />
+          <CharacterList characters={filteredCharacters} />
         </Route>
         <Route
           path='/character/:characterId'
