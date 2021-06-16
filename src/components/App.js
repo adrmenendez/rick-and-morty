@@ -1,11 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Route, Switch } from 'react-router-dom';
-//styles
 import '../styles/App.scss';
-//services
 import getApiData from '../services/api';
 import ls from '../services/storage';
-//components
 import CharacterList from './CharacterList';
 import NameFilter from './NameFilter';
 import SpecieFilter from './SpecieFilter';
@@ -48,6 +45,7 @@ function App() {
     })
     .filter((character) => {
       if (filterSpecie === '') {
+        //la función devuelve true cuando el elemento pasa el criterio de filtrado
         return true;
       } else {
         return character.specie === filterSpecie;
