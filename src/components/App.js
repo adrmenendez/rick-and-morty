@@ -12,7 +12,7 @@ import CharacterDetail from './CharacterDetail';
 import Warning from './Warning';
 
 function App() {
-  const [characters, setCharacters] = useState([]);
+  const [characters, setCharacters] = useState(ls.get('characters', []));
   const [filterName, setFilterName] = useState('');
 
   useEffect(() => {
@@ -29,10 +29,6 @@ function App() {
   useEffect(() => {
     ls.set('characters', characters);
   }, [characters]);
-
-  useEffect(() => {
-    ls.set('filterName', filterName);
-  }, [filterName]);
 
   const handleFilter = (data) => {
     setFilterName(data.value);
@@ -56,7 +52,7 @@ function App() {
   };
 
   const renderListOrWarning = () => {
-    if (characters !== undefined) {
+    if (filteredCharacters.length !== 0) {
       return <CharacterList characters={filteredCharacters} />;
     } else {
       return <Warning />;
