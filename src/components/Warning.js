@@ -2,8 +2,8 @@ import React from 'react';
 
 const Warning = (props) => {
   return (
-    <div>
-      <h2>El personaje que buscas no existe</h2>
+    <div className='warning'>
+      <h3>No hay ningún personaje que coincida con la búsqueda</h3>
     </div>
   );
 };

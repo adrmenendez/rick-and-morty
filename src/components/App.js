@@ -4,6 +4,7 @@ import { Route, Switch } from 'react-router-dom';
 import '../styles/App.scss';
 //services
 import getApiData from '../services/api';
+import ls from '../services/storage';
 //components
 import CharacterList from './CharacterList';
 import NameFilter from './NameFilter';
@@ -15,20 +16,27 @@ function App() {
   const [filterName, setFilterName] = useState('');
 
   useEffect(() => {
-    getApiData().then((data) => {
-      const orderedData = data.sort((a, b) =>
-        a.name > b.name ? 1 : a.name < b.name ? -1 : 0
-      );
-      return setCharacters(orderedData);
-    });
-  }, []);
+    if (characters.length === 0) {
+      getApiData().then((data) => {
+        const orderedData = data.sort((a, b) =>
+          a.name > b.name ? 1 : a.name < b.name ? -1 : 0
+        );
+        setCharacters(orderedData);
+      });
+    }
+  }, [characters.length]);
 
-  const submitHandler = (e) => {
-    e.preventDefault();
-  };
+  useEffect(() => {
+    ls.set('characters', characters);
+  }, [characters]);
+
+  useEffect(() => {
+    ls.set('filterName', filterName);
+  }, [filterName]);
 
   const handleFilter = (data) => {
     setFilterName(data.value);
+    ls.set('filterName', data.value);
   };
 
   const filteredCharacters = characters.filter((character) => {
@@ -40,25 +48,27 @@ function App() {
     const foundCharacter = characters.find(
       (character) => character.id === parseInt(matchId)
     );
-    return <CharacterDetail character={foundCharacter} />;
+    if (foundCharacter !== undefined) {
+      return <CharacterDetail character={foundCharacter} />;
+    } else {
+      return <Warning />;
+    }
   };
 
   const renderListOrWarning = () => {
-    return characters !== undefined ? (
-      <CharacterList characters={filteredCharacters} />
-    ) : (
-      <Warning />
-    );
+    if (characters !== undefined) {
+      return <CharacterList characters={filteredCharacters} />;
+    } else {
+      return <Warning />;
+    }
   };
 
   return (
     <div className='main'>
-      <h1>Rick and Morty</h1>
       <Switch>
         <Route exact path='/'>
-          <form onSubmit={submitHandler}>
-            <NameFilter handleFilter={handleFilter} />
-          </form>
+          <h1 className='main_title'>Rick and Morty</h1>
+          <NameFilter handleFilter={handleFilter} value={filterName} />
           {renderListOrWarning()}
         </Route>
         <Route
