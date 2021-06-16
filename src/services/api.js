@@ -1,5 +1,5 @@
 const getApiData = () => {
-  return fetch('https://rickandmortyapi.com/api/character')
+  return fetch('//rickandmortyapi.com/api/character')
     .then((res) => res.json())
     .then((data) => {
       return data.results.map((character) => {
