@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { Route, Switch } from 'react-router-dom';
-import '../styles/App.scss';
+//services
 import getApiData from '../services/api';
 import ls from '../services/storage';
+import filterCharacters from '../services/filterCharacters';
+//components
 import CharacterList from './CharacterList';
 import Filters from './Filters';
 import CharacterDetail from './CharacterDetail';
 import Warning from './Warning';
+import Header from './Header';
 
 function App() {
   const [characters, setCharacters] = useState(ls.get('characters', []));
@@ -23,6 +26,7 @@ function App() {
       });
     }
   }, [characters.length]);
+
   useEffect(() => ls.set('characters', characters), [characters]);
 
   const handleFilter = (data) => {
@@ -34,14 +38,6 @@ function App() {
       ls.set('filterSpecie', data.value);
     }
   };
-
-  const filteredCharacters = characters
-    .filter((character) => {
-      return character.name.toLowerCase().includes(filterName.toLowerCase());
-    })
-    .filter((character) => {
-      return filterSpecie === '' ? true : character.specie === filterSpecie;
-    });
 
   const renderCharacterDetail = (routerProps) => {
     const matchId = routerProps.match.params.characterId;
@@ -59,9 +55,11 @@ function App() {
     <div className='main'>
       <Switch>
         <Route exact path='/'>
-          <h1 className='main_title'>Rick and Morty</h1>
+          <Header />
           <Filters handleFilter={handleFilter} value={filterName} />
-          <CharacterList characters={filteredCharacters} />
+          <CharacterList
+            characters={filterCharacters(characters, filterName, filterSpecie)}
+          />
         </Route>
         <Route
           path='/character/:characterId'
