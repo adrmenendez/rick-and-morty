@@ -1,20 +1,17 @@
 import React from 'react';
 
-const NameFilter = (props) => {
+const SpecieFilter = (props) => {
   const handleChange = (ev) => {
     ev.preventDefault();
     props.handleFilter({
       value: ev.target.value,
-      key: 'name',
+      key: 'specie',
     });
   };
 
   return (
     <>
-      <label className='form_label' htmlFor='name'>
-        Busca un personaje:
-      </label>
-      <input
+      <select
         className='form_input'
         type='text'
         name='name'
@@ -22,9 +19,13 @@ const NameFilter = (props) => {
         placeholder='Rick...'
         value={props.value}
         onChange={handleChange}
-      />
+      >
+        <option value=''>Selecciona una especie</option>
+        <option value='Human'>Humano</option>
+        <option value='Alien'>Alien</option>
+      </select>
     </>
   );
 };
 
-export default NameFilter;
+export default SpecieFilter;

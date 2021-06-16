@@ -8,12 +8,14 @@ import ls from '../services/storage';
 //components
 import CharacterList from './CharacterList';
 import NameFilter from './NameFilter';
+import SpecieFilter from './SpecieFilter';
 import CharacterDetail from './CharacterDetail';
 import Warning from './Warning';
 
 function App() {
   const [characters, setCharacters] = useState(ls.get('characters', []));
   const [filterName, setFilterName] = useState('');
+  const [filterSpecie, setFilterSpecie] = useState('');
 
   useEffect(() => {
     if (characters.length === 0) {
@@ -31,13 +33,26 @@ function App() {
   }, [characters]);
 
   const handleFilter = (data) => {
-    setFilterName(data.value);
-    ls.set('filterName', data.value);
+    if (data.key === 'name') {
+      setFilterName(data.value);
+      ls.set('filterName', data.value);
+    } else {
+      setFilterSpecie(data.value);
+      ls.set('filterSpecie', data.value);
+    }
   };
 
-  const filteredCharacters = characters.filter((character) => {
-    return character.name.toLowerCase().includes(filterName.toLowerCase());
-  });
+  const filteredCharacters = characters
+    .filter((character) => {
+      return character.name.toLowerCase().includes(filterName.toLowerCase());
+    })
+    .filter((character) => {
+      if (filterSpecie === '') {
+        return true;
+      } else {
+        return character.specie === filterSpecie;
+      }
+    });
 
   const renderCharacterDetail = (routerProps) => {
     const matchId = routerProps.match.params.characterId;
@@ -59,12 +74,19 @@ function App() {
     }
   };
 
+  const submitHandler = (e) => {
+    e.preventDefault();
+  };
+
   return (
     <div className='main'>
       <Switch>
         <Route exact path='/'>
           <h1 className='main_title'>Rick and Morty</h1>
-          <NameFilter handleFilter={handleFilter} value={filterName} />
+          <form onSubmit={submitHandler} className='form'>
+            <NameFilter handleFilter={handleFilter} value={filterName} />
+            <SpecieFilter handleFilter={handleFilter} />
+          </form>
           {renderListOrWarning()}
         </Route>
         <Route
