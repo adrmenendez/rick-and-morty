@@ -5,9 +5,9 @@ import getApiData from '../services/api';
 import ls from '../services/storage';
 import filterCharacters from '../services/filterCharacters';
 //components
-import CharacterList from './CharacterList';
-import Filters from './Filters';
-import CharacterDetail from './CharacterDetail';
+import CharacterList from './Characters/CharacterList';
+import Filters from './Filters/Filters';
+import CharacterDetail from './Characters/CharacterDetail';
 import Warning from './Warning';
 import Header from './Header';
 

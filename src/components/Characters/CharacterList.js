@@ -1,6 +1,6 @@
 import React from 'react';
 import CharacterCard from './CharacterCard';
-import Warning from './Warning';
+import Warning from '../Warning';
 
 const CharacterList = (props) => {
   const renderCharacters = props.characters.map((character) => {

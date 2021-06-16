@@ -1,23 +1,31 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const CharacterDetail = (props) => {
   let status;
   if (props.character.status === 'Alive') {
-    status = <i className='fas fa-hand-spock detail_data--icon'></i>;
+    status = <i className='fas fa-hand-spock detail_data--icon' />;
   } else if (props.character.status === 'unknown') {
-    status = <i className='fas fa-question detail_data--icon'></i>;
+    status = <i className='fas fa-question detail_data--icon' />;
   } else {
-    status = <i className='fas fa-skull-crossbones detail_data--icon'></i>;
+    status = <i className='fas fa-skull-crossbones detail_data--icon' />;
   }
 
-  let specie;
-  if (props.character.specie === 'Alien') {
-    specie = <i className='fab fa-reddit-alien detail_data--icon'></i>;
-  } else {
-    specie = <i className='fas fa-male detail_data--icon'></i>;
-  }
+  const specie =
+    props.character.specie === 'Alien' ? (
+      <i className='fab fa-reddit-alien detail_data--icon' />
+    ) : (
+      <i className='fas fa-male detail_data--icon' />
+    );
+
   return (
     <div className='detail_main'>
+      <Link to='/' className='detail_back'>
+        <p>
+          Volver
+          <i class='fas fa-times detail_back--icon' />
+        </p>
+      </Link>
       <div className='detail'>
         <img
           className='detail_img'

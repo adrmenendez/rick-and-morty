@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Warning = (props) => {
+const Warning = () => {
   return (
     <div className='warning'>
       <h3 className='warning_text'>
