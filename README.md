@@ -1,5 +1,7 @@
 # rick-and-morty
 
+![image](https://user-images.githubusercontent.com/79847060/124566878-bc676580-de43-11eb-8e75-147a480ce97b.png)
+
 Este proyecto se trata de una web sobre la serie de animación 'Rick and Morty' e que incluye un sencillo buscador de personajes por nombre y especie. Cada personaje tiene una ficha individual a la que se accede clickando sobre él. La lista de personajes se ha obtenido de la API pública de Rick y Morty: 'https://rickandmortyapi.com/api/character'.
 
 ## Demo
