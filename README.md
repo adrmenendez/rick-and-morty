@@ -1,10 +1,10 @@
-# modulo-3-evaluación-final-andrea-menéndez
+# rick-and-morty
 
-Este es un proyecto se trata de una web sobre la serie de animación 'Rick and Morty' e que incluye un sencillo buscador de personajes por nombre y especie. Cada personaje tiene una ficha individual a la que se accede clickando sobre él.
+Este proyecto se trata de una web sobre la serie de animación 'Rick and Morty' e que incluye un sencillo buscador de personajes por nombre y especie. Cada personaje tiene una ficha individual a la que se accede clickando sobre él. La lista de personajes se ha obtenido de la API pública de Rick y Morty: 'https://rickandmortyapi.com/api/character'.
 
 ## Demo
 
-Puedes ver el resultado final pinchando en este enlace:
+Puedes ver el resultado final pinchando en este enlace: https://adrmenendez.github.io/rick-and-morty/
 
 ### Cómo iniciar el proyecto:
 
@@ -21,15 +21,3 @@ Una vez hechos estos pasos, ya puedes empezar a programar!
 
 La web ha sido desarrollada usando React y SASS y CSS como preprocesadores.
 
-### Estructura de carpetas:
-
-├── src/
-│ ├── components/
-│ ├── images/
-│ ├── services/
-│ ├── styles/
-│ └── index.js
-├── public/
-├── docs/
-├── package.json
-└── ...
